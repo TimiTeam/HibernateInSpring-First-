@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <import resource="datasource-timur_base.xml"/>
+       <!-- Here we import the data from .xml where there is a drive, url, userName, password -->
+
+       <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+               p:sessionFactory-ref="sessionFactory"/>
+       <!-- The Hibernate session factory requires a transaction manager  for transaction access to data.
+              The Spring platform provide a transaction manager specific for Hibernate-->
+
+       <context:component-scan base-package="com.apress.prospring4.ch7"/>
+
+       <tx:annotation-driven/>
+       <!-- To support the requirements for setting transaction boundaries using annotations -->
+
+       <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+               p:dataSource-ref="dataSource"
+               p:packagesToScan="com.apress.prospring4.ch7"
+               p:hibernateProperties-ref="hibernateProperties"/>
+       <!-- 1)inject the dateSource-->
+       <!-- 2) We instruct Hibernate to scan domain objects in a package  -->
+       <!-- 3) The hibernateProperties property is provide configuration details for Hibernate -->
+
+
+       <util:properties id="hibernateProperties">
+              <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+              <!-- The dialect of the database for requires the Hibernate should use-->
+              <prop key="hibernate.max_fetch_depth">3</prop>
+              <!-- Declares the 'depth' for external connections when the display objects have
+              association with other display objects-->
+              <prop key="hibernate.jdbc.fetch_size">50</prop>
+              <!-- The number of the records from the underlying JDBC result set that the Hibernate library
+              must use to extract records from the database to each sample -->
+              <prop key="hibernate.jdbc.batch_size">10</prop>
+              <!-- Indicates the number of update operation Hibernate needs to grouted into a package -->
+              <prop key="hibernate.show_sql">true</prop>
+              <!-- Indicates whether the Hibernate library should display SQL commands in a log or console-->
+       </util:properties>
+</beans>
