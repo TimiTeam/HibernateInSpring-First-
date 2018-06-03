@@ -1,15 +1,19 @@
-package com.apress.prospring4.ch7.Componets;
+package com.apress.prospring4.ch7.componets;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "hobby")
-public class Hobby {
+public class Hobby implements Serializable{
 
     private String hobbyId;
     private Set<Contact> contacts = new HashSet<Contact>();
+
+    public Hobby() {
+    }
 
     @Id
     @Column(name = "hobby_id")

@@ -1,4 +1,4 @@
-package com.apress.prospring4.ch7.Componets;
+package com.apress.prospring4.ch7.componets;
 
 import javax.persistence.*;
 
@@ -10,6 +10,9 @@ public class ContactTelDetail {
     private String telType;
     private String telNumber;
     private Contact contact;
+
+    public ContactTelDetail() {
+    }
 
     public ContactTelDetail(String telType, String telNumber) {
         this.telType = telType;

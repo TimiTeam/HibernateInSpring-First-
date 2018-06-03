@@ -1,17 +1,16 @@
-package com.apress.prospring4.ch7.Componets;
+package com.apress.prospring4.ch7.componets;
 
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 
 @Entity
 //This annotation reports that this class is displayed essential class
 @Table(name = "contact")
 //This annotation specifies the name of the table in the database to which this entity is displayed
-public class Contact {
+public class Contact implements Serializable{
     private Long id;
     private int version;
     private String firstName;
@@ -19,6 +18,8 @@ public class Contact {
     private Date birthDate;
     private Set<ContactTelDetail> contactTelDetails = new HashSet<ContactTelDetail>();
     private Set<Hobby> hobbies = new HashSet<Hobby>();
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,18 +90,19 @@ public class Contact {
         this.contactTelDetails = contactTelDetails;
     }
 
-    public Set<Hobby> getHobbies() {
-        return hobbies;
-    }
-
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "contact_hobby_detail",
-    joinColumns = @JoinColumn(name = "contact_id"),
-    inverseJoinColumns = @JoinColumn(name = "hobby_id"))
+            joinColumns = @JoinColumn(name = "contact_id"),
+            inverseJoinColumns = @JoinColumn(name = "hobby_id"))
 //    @JoinTable indicates the connection table that the Hibernate should look at.
 //    The 'joinColumns' defines a column that is a foreign key in the table 'contact'.
 //    The 'inverseJoinColumns' specifies a column that represents the foreign key
 // on the other side of the association, 'hobby'
+    public Set<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+
     public void setHobbies(Set<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
@@ -116,8 +118,8 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact with" +
-                "id: " + id +
+        return "Contact with " +
+                "Id: " + id +
                 ", version - " + version +
                 ", firstName - " + firstName +
                 ", lastName - " + lastName +
