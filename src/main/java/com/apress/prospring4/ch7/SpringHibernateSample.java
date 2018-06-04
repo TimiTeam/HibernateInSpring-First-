@@ -20,7 +20,7 @@ public class SpringHibernateSample {
 
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-        listContacts(dao.findAllWithDetail());
+        LOGGER.info(dao.findById(7L));
 
 
 

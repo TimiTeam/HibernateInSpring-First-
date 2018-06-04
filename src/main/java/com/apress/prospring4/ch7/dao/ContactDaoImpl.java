@@ -39,8 +39,10 @@ public class ContactDaoImpl implements ContactDao,Serializable {
         return sessionFactory.getCurrentSession().getNamedQuery("Contact.findAllWithDetail").list();
     }
 
+    @Transactional(readOnly = true)
     public Contact findById(Long id) {
-        return null;
+        return (Contact)sessionFactory.getCurrentSession().getNamedQuery("Contact.findById").
+                setParameter("id",id).uniqueResult();
     }
 
     public Contact save(Contact contact) {
