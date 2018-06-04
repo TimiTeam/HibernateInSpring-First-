@@ -20,7 +20,7 @@ public class SpringHibernateSample {
 
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-        simpleList(dao.findAll());
+        listContacts(dao.findAllWithDetail());
 
 
 
@@ -36,11 +36,11 @@ public class SpringHibernateSample {
             LOGGER.info(c);
             if(c.getContactTelDetails() != null){
                 for(ContactTelDetail contactTelDetail : c.getContactTelDetails()){
-                    LOGGER.info(contactTelDetail+"\n");
+                    LOGGER.info("----"+contactTelDetail);
                 }
                 if(c.getHobbies() != null){
                     for(Hobby h: c.getHobbies()){
-                        LOGGER.info(h+"\n");
+                        LOGGER.info("****"+h);
                     }
                 }
             }

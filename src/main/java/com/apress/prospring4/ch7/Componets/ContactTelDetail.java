@@ -61,7 +61,7 @@ public class ContactTelDetail {
     @ManyToOne
     @JoinColumn(name = "contact_id")
     public Contact getContact() {
-        return contact;
+        return this.contact;
     }
 
     public void setContact(Contact contact) {
@@ -71,8 +71,8 @@ public class ContactTelDetail {
 
     @Override
     public String toString() {
-        return "ContactTelDetail id: " + id +
-                "Contact id: "+ contact.getId()+
+        return "ContactTelDetail ID: " + id +
+                " * Contact ID: "+ contact.getId()+
                 ", telType - " + telType +
                 ", number - " + telNumber;
     }

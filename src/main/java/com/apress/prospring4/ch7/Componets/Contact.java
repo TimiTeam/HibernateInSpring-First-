@@ -10,6 +10,11 @@ import java.util.*;
 //This annotation reports that this class is displayed essential class
 @Table(name = "contact")
 //This annotation specifies the name of the table in the database to which this entity is displayed
+@NamedQueries({
+        @NamedQuery(name="Contact.findAllWithDetail",
+                query = "select distinct c from Contact c left join fetch c.contactTelDetails t " +
+                        "left join fetch c.hobbies h")
+                })
 public class Contact implements Serializable{
     private Long id;
     private int version;
@@ -19,7 +24,8 @@ public class Contact implements Serializable{
     private Set<ContactTelDetail> contactTelDetails = new HashSet<ContactTelDetail>();
     private Set<Hobby> hobbies = new HashSet<Hobby>();
 
-
+    public Contact() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,14 +89,14 @@ public class Contact implements Serializable{
 //    'orphanRemoval' indicates that after the details of the contact's phone numbers are updated,
 // entries that no longer exist in the set must be removed from the database.
     public Set<ContactTelDetail> getContactTelDetails() {
-        return contactTelDetails;
+        return this.contactTelDetails;
     }
 
     public void setContactTelDetails(Set<ContactTelDetail> contactTelDetails) {
         this.contactTelDetails = contactTelDetails;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "contact_hobby_detail",
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "hobby_id"))
