@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class SpringHibernateSample {
@@ -20,10 +21,9 @@ public class SpringHibernateSample {
 
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-        Contact c = dao.save(new Contact("Anna", "Bujalo", "1995-07-30"));
+        dao.delete(dao.findById(15L));
 
-        LOGGER.info(dao.findById(c.getId()));
-
+        listContacts(dao.findAllWithDetail());
 
 
     }

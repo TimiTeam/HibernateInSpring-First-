@@ -52,6 +52,7 @@ public class ContactDaoImpl implements ContactDao,Serializable {
     }
 
     public void delete(Contact contact) {
-
+        sessionFactory.getCurrentSession().delete(contact);
+        LOGGER.info("Delete the contact with ID: "+contact.getId());
     }
 }
