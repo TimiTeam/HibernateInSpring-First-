@@ -3,6 +3,8 @@ package com.apress.prospring4.ch7.componets;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -28,6 +30,20 @@ public class Contact implements Serializable{
     private Set<Hobby> hobbies = new HashSet<Hobby>();
 
     public Contact() {
+    }
+
+    public Contact(String firstName, String lastName, String data) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(data == null){
+            this.birthDate = new Date(Calendar.getInstance().getTimeInMillis());
+        }
+        try {
+            this.birthDate = simpleDateFormat.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Id

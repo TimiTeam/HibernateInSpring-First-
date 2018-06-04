@@ -42,11 +42,13 @@ public class ContactDaoImpl implements ContactDao,Serializable {
     @Transactional(readOnly = true)
     public Contact findById(Long id) {
         return (Contact)sessionFactory.getCurrentSession().getNamedQuery("Contact.findById").
-                setParameter("id",id).uniqueResult();
+                setParameter("id", id).uniqueResult();
     }
 
     public Contact save(Contact contact) {
-        return null;
+        sessionFactory.getCurrentSession().saveOrUpdate(contact);
+        LOGGER.info("Contact saved with id: "+contact.getId());
+        return contact;
     }
 
     public void delete(Contact contact) {
